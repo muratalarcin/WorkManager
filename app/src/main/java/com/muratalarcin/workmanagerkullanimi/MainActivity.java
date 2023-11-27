@@ -2,6 +2,7 @@ package com.muratalarcin.workmanagerkullanimi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.work.OneTimeWorkRequest;
+import androidx.work.PeriodicWorkRequest;
 import androidx.work.WorkManager;
 import androidx.work.WorkRequest;
 
@@ -20,8 +21,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.buttonYap.setOnClickListener(view -> {
-            WorkRequest istek = new OneTimeWorkRequest.Builder(MyWorker.class)
-                    .setInitialDelay(10, TimeUnit.SECONDS)
+//            WorkRequest istek = new OneTimeWorkRequest.Builder(MyWorker.class)
+//                    .setInitialDelay(10, TimeUnit.SECONDS)
+//                    .build();
+
+            WorkRequest istek = new PeriodicWorkRequest
+                    .Builder(MyWorkerBildirim.class, 15, TimeUnit.MINUTES)//15dk
+                    .setInitialDelay(10, TimeUnit.SECONDS)//10sn
                     .build();
 
             WorkManager.getInstance(this).enqueue(istek);
